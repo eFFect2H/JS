@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Светофор</title>
+<style>
+  .traffic-light {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .light {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer; /* Добавляем курсор указывающий, что огни кликабельны */
+  }
+  .red {
+    background-color: red;
+  }
+  .yellow {
+    background-color: yellow;
+  }
+  .green {
+    background-color: green;
+  }
+  .active {
+    box-shadow: 0 0 10px #00ffff; 
+  }
+</style>
+</head>
+<body>
+<div class="traffic-light">
+  <div class="light red"></div>
+  <div class="light yellow"></div>
+  <div class="light green"></div>
+  <button id="toggleButton">OFF</button>
+</div>
+
+<script>
+const lights = document.querySelectorAll('.light');
+const toggleButton = document.getElementById('toggleButton');
+
+let isOn = false;
+
+toggleButton.addEventListener('click', () => {
+  isOn = !isOn;
+  toggleButton.textContent = isOn ? 'ON' : 'OFF';
+  
+  if (!isOn) {
+    lights.forEach(light => light.classList.remove('active')); 
+  }
+});
+
+lights.forEach(light => {
+  light.addEventListener('click', () => {
+    if (isOn) {
+      lights.forEach(l => l.classList.remove('active'));
+      light.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>
