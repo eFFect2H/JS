@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ползунок</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  #container {
+    width: 300px;
+  }
+
+  #slider {
+    width: 100%;
+  }
+
+  #square1{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(223, 7, 7);
+    margin-top: 20px;
+  }
+  #square2{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(25, 0, 255);
+    margin-top: 20px;
+    
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <input type="range" min="0" max="255" id="slider">
+  <div id="square1"></div>
+  <div id="square2"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var slider = document.getElementById('slider');
+  var square1 = document.getElementById('square1');
+  var square2 = document.getElementById('square2');
+
+  slider.addEventListener('input', function() {
+    var value = this.value;
+    var color = 'rgb(' + value + ',' + value + ',' + value + ')';
+    document.body.style.backgroundColor = color;
+
+    var offset = value * 2; // Увеличение отступа для квадратов
+    square1.style.marginLeft = offset + 'px';
+    square2.style.marginRight = offset + 'px';
+  });
+});
+</script>
+
+</body>
+</html>
