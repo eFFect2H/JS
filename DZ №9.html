@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Многоуровневый список</title>
+</head>
+<body>
+
+<ul id="multilevelList">
+  <li>Запись 1</li>
+  <li>Запись 2</li>
+  <li>
+    Запись 3
+    <ul>
+      <li>Подзапись 3.1</li>
+      <li>Подзапись 3.2</li>
+      <li>Подзапись 3.3</li>
+    </ul>
+  </li>
+  <li>Запись 4</li>
+  <li>https://ru.hexlet.io/courses/js-dom/lessons/dom-hierarchy/theory_unit</li>
+  <li>Запись 6</li>
+  <li>https://www.google.com</li>
+</ul>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var listItems = document.querySelectorAll('#multilevelList li');
+
+  listItems.forEach(function(item) {
+    var text = item.textContent.trim();
+    if (text.startsWith('http://') || text.startsWith('https://')) {
+      var link = document.createElement('a');
+      link.setAttribute('href', text);
+      link.textContent = text;
+      item.textContent = '';
+      item.appendChild(link);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
