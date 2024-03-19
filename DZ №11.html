@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Круги и кнопки</title>
+<style>
+  #container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+  }
+
+  .circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: red;
+    margin: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <button id="decreaseBtn">-</button>
+  <div id="circles"></div>
+  <button id="increaseBtn">+</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var circlesContainer = document.getElementById('circles');
+  var decreaseBtn = document.getElementById('decreaseBtn');
+  var increaseBtn = document.getElementById('increaseBtn');
+
+  // Проверяем, есть ли значение количества кругов в cookies
+  var numCircles = parseInt(getCookie('numCircles'));
+  if (isNaN(numCircles)) {
+    numCircles = 3; // Устанавливаем значение по умолчанию
+  }
+
+  // Создаем круги согласно сохраненному значению в cookies
+  for (var i = 0; i < numCircles; i++) {
+    var circle = document.createElement('div');
+    circle.className = 'circle';
+    circlesContainer.appendChild(circle);
+  }
+
+  // Обработчик нажатия на кнопку уменьшения
+  decreaseBtn.addEventListener('click', function() {
+    if (numCircles > 0) {
+      numCircles--;
+      updateCircles();
+    }
+  });
+
+  // Обработчик нажатия на кнопку увеличения
+  increaseBtn.addEventListener('click', function() {
+    numCircles++;
+    updateCircles();
+  });
+
+  // Функция обновления количества кругов
+  function updateCircles() {
+    circlesContainer.innerHTML = ''; // Очищаем контейнер
+
+    // Создаем новое количество кругов
+    for (var i = 0; i < numCircles; i++) {
+      var circle = document.createElement('div');
+      circle.className = 'circle';
+      circlesContainer.appendChild(circle);
+    }
+
+    // Сохраняем новое значение в cookies
+    setCookie('numCircles', numCircles, 365);
+  }
+
+  // Функция для установки cookie
+  function setCookie(name, value, days) {
+    var expires = '';
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = '; expires=' + date.toUTCString();
+    }
+    document.cookie = name + '=' + value + expires + '; path=/';
+  }
+
+  // Функция для получения cookie по имени
+  function getCookie(name) {
+    var nameEQ = name + '=';
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1, c.length);
+      }
+      if (c.indexOf(nameEQ) == 0) {
+        return c.substring(nameEQ.length, c.length);
+      }
+    }
+    return null;
+  }
+});
+</script>
+
+</body>
+</html>
